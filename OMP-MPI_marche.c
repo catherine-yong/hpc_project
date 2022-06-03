@@ -289,7 +289,6 @@ void sparse_matrix_vector_product(u32 * y, struct sparsematrix_t const * M, u32 
         {
           double lo = rank * (ncols/p);
           double hi = (rank + 1) * (ncols/p);
-          //double inc = ncols/p; // le pas d'incrementation
 
           for (long i = 0; i < nrows * n; i++)
                   y[i] = 0;
