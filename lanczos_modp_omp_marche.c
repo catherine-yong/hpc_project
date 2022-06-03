@@ -487,11 +487,6 @@ void orthogonalize(u32 * v, u32 * tmp, u32 * p, u32 * d, u32 const * vtAv, const
             vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
           }
 
-        //u32 vtAvd[n * n];
-        //for (int i = 0; i < n; i++)
-                //for (int j = 0; j < n; j++)
-                        //vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
-
         /* compute the next value of v ; store it in tmp */
         for (long i = 0; i < N; i++)
                 for (long j = 0; j < n; j++)
