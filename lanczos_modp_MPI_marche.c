@@ -498,19 +498,23 @@ void orthogonalize(u32 * v, u32 * tmp, u32 * p, u32 * d, u32 const * vtAv, const
         u32 c[n * n];
         u32 spliced[n * n];
         for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++) {
-                        spliced[i*n + j] = d[j] ? vtAAv[i * n + j] : vtAv[i * n + j];
-                        c[i * n + j] = 0;
-                }
+          for (int j = 0; j < n; j++) {
+                  spliced[i*n + j] = d[j] ? vtAAv[i * n + j] : vtAv[i * n + j];
+                  c[i * n + j] = 0;
+          }
         matmul_CpAB(c, winv, spliced);
-        for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                        c[i * n + j] = prime - c[i * n + j];
-
         u32 vtAvd[n * n];
         for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
-                        vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
+          for (int j = 0; j < n; j++)
+          {
+            c[i * n + j] = prime - c[i * n + j];
+            vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
+          }
+
+        //u32 vtAvd[n * n];
+        //for (int i = 0; i < n; i++)
+                //for (int j = 0; j < n; j++)
+                        //vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
 
         /* compute the next value of v ; store it in tmp */
         for (long i = 0; i < N; i++)
@@ -528,6 +532,7 @@ void orthogonalize(u32 * v, u32 * tmp, u32 * p, u32 * d, u32 const * vtAv, const
         for (long i = 0; i < N; i += n)
                 matmul_CpAB(&p[i*n], &v[i*n], winv);
 }
+
 
 void verbosity()
 {
