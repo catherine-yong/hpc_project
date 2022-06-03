@@ -288,7 +288,6 @@ void sparse_matrix_vector_product(u32 * y, struct sparsematrix_t const * M, u32 
         {
           double lo = rank * (ncols/p);
           double hi = (rank + 1) * (ncols/p);
-          //double inc = ncols/p; // le pas d'incrementation
 
           for (long i = 0; i < nrows * n; i++)
                   y[i] = 0;
@@ -308,7 +307,6 @@ void sparse_matrix_vector_product(u32 * y, struct sparsematrix_t const * M, u32 
               y[i * n + l] = (a + v * b) % prime;
             }
           }
-          //printf("8) \n" );
 
           if (rank == 0)
           {
@@ -318,7 +316,6 @@ void sparse_matrix_vector_product(u32 * y, struct sparsematrix_t const * M, u32 
           {
             MPI_Gather(&y[rank*(ncols/p)],ncols/p, MPI_LONG, NULL,0,NULL,0, MPI_COMM_WORLD);
           }
-          //printf("5)\n");
         }
       }
 /****************** dense linear algebra modulo p *************************/
@@ -517,11 +514,6 @@ void orthogonalize(u32 * v, u32 * tmp, u32 * p, u32 * d, u32 const * vtAv, const
             c[i * n + j] = prime - c[i * n + j];
             vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
           }
-
-        //u32 vtAvd[n * n];
-        //for (int i = 0; i < n; i++)
-                //for (int j = 0; j < n; j++)
-                        //vtAvd[i*n + j] = d[j] ? prime - vtAv[i * n + j] : 0;
 
         /* compute the next value of v ; store it in tmp */
         for (long i = 0; i < N; i++)
